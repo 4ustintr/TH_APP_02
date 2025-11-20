@@ -1,72 +1,97 @@
-import { View, Text, Pressable, StyleSheet, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image } from 'react-native';
 import { router } from 'expo-router';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons'; // Sử dụng icon từ thư viện có sẵn của Expo
 
-export default function Explore() {
-  const lessons = [
-    { id: 2, title: 'Bài 2 – Xin chào React Native', path: '/Bai02' },
-    { id: 3, title: 'Bài 3 – Hiển thị hình ảnh', path: '/Bai03' },
-    { id: 4, title: 'Bài 4 – Thẻ thông tin cá nhân', path: '/Bai04' },
-    { id: 5, title: 'Bài 5 – Tính điểm trung bình', path: '/Bai05' },
-    { id: 6, title: 'Bài 6 – Đổi màu nền', path: '/Bai06' },
-    { id: 7, title: 'Bài 7 – Danh sách công việc', path: '/Bai07' },
-    { id: 8, title: 'Bài 8 – App 2 màn hình', path: '/Bai08' },
-    { id: 9, title: 'Bài 9 – Tab Navigation', path: '/Bai09' },
-    { id: 10, title: 'Bài 10 – Danh sách sinh viên', path: '/Bai10' },
-  ];
-
+export default function ExploreScreen() {
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.header}>Danh sách bài thực hành</Text>
+    <SafeAreaView style={styles.container} edges={['top']}>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        
+        {/* Header */}
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>Khám phá</Text>
+          <Text style={styles.headerSubtitle}>Các ứng dụng & tính năng demo</Text>
+        </View>
 
-      {lessons.map((item) => (
-        <Pressable
-          key={item.id}
-          style={({ pressed }) => [
-            styles.button,
-            pressed && { opacity: 0.7, transform: [{ scale: 0.98 }] },
-          ]}
-          onPress={() => router.push(item.path as never)}
+        <TouchableOpacity 
+          style={styles.card} 
+          onPress={() => router.push('../Delivery')} 
+          activeOpacity={0.8}
         >
-          <Text style={styles.text}>{item.title}</Text>
-        </Pressable>
-      ))}
-
-      <Text style={styles.note}>
-        👉 Nhấn vào từng bài để mở và chạy ứng dụng tương ứng.
-      </Text>
-    </ScrollView>
+          <View style={[styles.iconContainer, { backgroundColor: '#e3f2fd' }]}>
+            <Ionicons name="map" size={32} color="#0a7ea4" />
+          </View>
+          <View style={styles.cardContent}>
+            <Text style={styles.cardTitle}>Giao hàng quanh tôi</Text>
+            <Text style={styles.cardDescription}>
+              Bản đồ Google Map, định vị GPS, vẽ đường đi và Marker ảo.
+            </Text>
+          </View>
+          <Ionicons name="chevron-forward" size={20} color="#ccc" />
+        </TouchableOpacity>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    backgroundColor: '#f8f9fa',
+  },
+  scrollContent: {
     padding: 20,
-    backgroundColor: '#fff',
   },
   header: {
-    fontSize: 22,
-    fontWeight: '700',
-    textAlign: 'center',
-    marginBottom: 20,
-    color: '#1a237e',
+    marginBottom: 24,
   },
-  button: {
-    backgroundColor: '#e3f2fd',
-    padding: 16,
-    borderRadius: 12,
-    marginBottom: 12,
-    borderWidth: 1,
-    borderColor: '#90caf9',
+  headerTitle: {
+    fontSize: 32,
+    fontWeight: '800',
+    color: '#1a1a1a',
+    marginBottom: 4,
   },
-  text: {
+  headerSubtitle: {
     fontSize: 16,
-    fontWeight: '500',
-    color: '#0d47a1',
-  },
-  note: {
-    marginTop: 20,
-    textAlign: 'center',
     color: '#666',
-    fontStyle: 'italic',
+  },
+  card: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2, 
+    borderWidth: 1,
+    borderColor: '#f0f0f0',
+  },
+  iconContainer: {
+    width: 56,
+    height: 56,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 16,
+  },
+  cardContent: {
+    flex: 1,
+    marginRight: 8,
+  },
+  cardTitle: {
+    fontSize: 17,
+    fontWeight: '700',
+    color: '#333',
+    marginBottom: 4,
+  },
+  cardDescription: {
+    fontSize: 13,
+    color: '#888',
+    lineHeight: 18,
   },
 });
